@@ -10,7 +10,7 @@
 #include <geometry_msgs/Twist.h>
 #include <QDebug>
  
-#include "rviz_start_button.h"
+#include "rviz_velocity_panel.h"
  
 namespace rviz_telop_commander
 {

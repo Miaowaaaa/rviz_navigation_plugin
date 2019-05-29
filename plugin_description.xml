@@ -1,5 +1,5 @@
 <library path="lib/librviz_navigation_plugin">    
-    <class name="rviz_navigation_plugin/TestPanel"
+    <class name="rviz_navigation_plugin/VelocityPanel"
          type="rviz_telop_commander::TeleopPanel"
          base_class_type="rviz::Panel">
     <description>

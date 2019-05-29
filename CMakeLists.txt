@@ -18,16 +18,16 @@ if (rviz_QT_VERSION VERSION_GREATER "5.0.0")
   find_package(Qt5Widgets)
   catkin_package()
   set (Qt5QtCore_DIR /usr/lib/x86_64-linux-gnu/cmake)
-  include_directories(${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS})
+  include_directories( include ${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS})
 
   set(QT_LIBRARIES ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES})
 
   qt5_wrap_cpp(MOC_FILES
-    src/rviz_start_button.h
+    include/rviz_velocity_panel.h
   )
   add_definitions(-DQT_NO_KEYWORDS)
   set(SOURCE_FILES
-    src/rviz_start_button.cpp
+    src/rviz_velocity_panel.cpp
     ${MOC_FILES}
   )
   
@@ -40,18 +40,20 @@ else()
   catkin_package()
   include(${QT_USE_FILE})
 
+  include_directories( include )
+
   qt4_wrap_cpp(MOC_FILES
-    src/rviz_start_button.h
+    include/rviz_velocity_panel.h
   )
   add_definitions(-DQT_NO_KEYWORDS)
-set(SOURCE_FILES
-  src/rviz_start_button.cpp
-  ${MOC_FILES}
-)
+  set(SOURCE_FILES
+    src/rviz_velocity_panel.cpp
+    ${MOC_FILES}
+  )
 
-## Declare a C++ library
-add_library(${PROJECT_NAME} ${SOURCE_FILES} ${MOC_FILES})
-target_link_libraries(${PROJECT_NAME}  ${QT_LIBRARIES}  ${catkin_LIBRARIES})
+  ## Declare a C++ library
+  add_library(${PROJECT_NAME} ${SOURCE_FILES} ${MOC_FILES})
+  target_link_libraries(${PROJECT_NAME}  ${QT_LIBRARIES}  ${catkin_LIBRARIES})
 endif()
 
 
