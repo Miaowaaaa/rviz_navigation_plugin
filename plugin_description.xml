@@ -6,4 +6,11 @@
       A panel widget allowing simple diff-drive style robot base control.
     </description>
   </class>
+  <class name="rviz_navigation_plugin/StartButton"
+         type="rviz_navigation::NavigationButton"
+         base_class_type="rviz::Panel">
+    <description>
+      A Button to call a navigation service.
+    </description>
+  </class>
 </library>

@@ -7,7 +7,7 @@ project(rviz_navigation_plugin)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS rviz cmake_modules)
+find_package(catkin REQUIRED COMPONENTS rviz cmake_modules std_srvs)
 
 include_directories(${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
@@ -24,10 +24,12 @@ if (rviz_QT_VERSION VERSION_GREATER "5.0.0")
 
   qt5_wrap_cpp(MOC_FILES
     include/rviz_velocity_panel.h
+    include/rviz_start_button.h
   )
   add_definitions(-DQT_NO_KEYWORDS)
   set(SOURCE_FILES
     src/rviz_velocity_panel.cpp
+    src/rviz_start_button.cpp
     ${MOC_FILES}
   )
   
@@ -44,10 +46,12 @@ else()
 
   qt4_wrap_cpp(MOC_FILES
     include/rviz_velocity_panel.h
+    include/rviz_start_button.h
   )
   add_definitions(-DQT_NO_KEYWORDS)
   set(SOURCE_FILES
     src/rviz_velocity_panel.cpp
+    src/rviz_start_button.cpp
     ${MOC_FILES}
   )
 
