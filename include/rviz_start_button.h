@@ -27,14 +27,19 @@ public Q_SLOTS:
     //start navigation
     void start();
 
-protected Q_SLOTS:
+    //clear navigaiton goals
+    void clear();
+
 
     void test();
 
 protected:
 
     QPushButton *_start_b;
+    QPushButton *_delete_b;
     bool _doing_navigation;
+    ros::NodeHandle _nh;
+    ros::Publisher _clear_pub;
 };
 
 }
