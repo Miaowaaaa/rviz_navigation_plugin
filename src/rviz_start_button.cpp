@@ -16,18 +16,22 @@ NavigationButton::NavigationButton(QWidget* parent)
     QVBoxLayout *root = new QVBoxLayout;
     _start_b = new QPushButton("Start Navigation");
     _delete_b = new QPushButton("Clear Goals");
+    _record_b = new QPushButton("Voice Command");
     root->addWidget(_start_b);
     root->addWidget(_delete_b);
+    root->addWidget(_record_b);
     setLayout(root);
 
     connect( _start_b, SIGNAL(clicked()),this,SLOT(start()));
 
     connect( _delete_b, SIGNAL(clicked()),this,SLOT(clear()));
+
+    connect( _record_b, SIGNAL(pressed()),this,SLOT(record_voice()));
 }
 
 void NavigationButton::start()
 {
-    boost::thread thread(boost::bind(&NavigationButton::test,this));
+    boost::thread thread(boost::bind(&NavigationButton::call_nav_service,this));
 }
 
 void NavigationButton::clear()
@@ -35,6 +39,41 @@ void NavigationButton::clear()
     std_msgs::Bool msg;
     msg.data = true;
     _clear_pub.publish(msg);
+}
+
+void NavigationButton::record_voice()
+{
+    boost::thread thread(boost::bind(&NavigationButton::call_voi_service,this));
+}
+
+void NavigationButton::call_voi_service()
+{
+    ROS_INFO("Begining record voice...");
+    _record_b->setEnabled(false);
+    _record_b->setText("Recording...");
+    std_srvs::Empty::Request req;
+    std_srvs::Empty::Response resp;
+    if(!ros::service::exists("voice_service",true))
+    {
+        _record_b->setEnabled(true);
+        _record_b->setText("Voice Command");
+        ROS_WARN("no such service!");
+        return;
+    }
+    bool success = ros::service::call("voice_service",req,resp);
+    if(success)
+    {
+        _record_b->setEnabled(true);
+        _record_b->setText("Voice Command");
+        ROS_WARN("no such service!");
+        return;
+    }
+    else
+    {
+        _record_b->setEnabled(true);
+        _record_b->setText("Voice Command");
+        ROS_WARN("Something error in voice recording");
+    }
 }
 
 //Override
@@ -56,7 +95,7 @@ void NavigationButton::load(const rviz::Config& config)
 
 }
 
-void NavigationButton::test()
+void NavigationButton::call_nav_service()
 {
     ROS_INFO("Test output!");
     ROS_INFO("start navigation!");

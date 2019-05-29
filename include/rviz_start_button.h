@@ -27,16 +27,22 @@ public Q_SLOTS:
     //start navigation
     void start();
 
-    //clear navigaiton goals
+    //  navigaiton goals
     void clear();
 
+    //record voice
+    void record_voice();
 
-    void test();
+protected:
+
+    void call_nav_service();
+    void call_voi_service();
 
 protected:
 
     QPushButton *_start_b;
     QPushButton *_delete_b;
+    QPushButton *_record_b;
     bool _doing_navigation;
     ros::NodeHandle _nh;
     ros::Publisher _clear_pub;
