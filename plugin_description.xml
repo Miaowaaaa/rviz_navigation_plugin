@@ -13,4 +13,11 @@
       A Button to call a navigation service.
     </description>
   </class>
+  <class name="rviz_navigation_plugin/LabelNavGoal"
+         type="rviz_point_label::LabelPointTool"
+         base_class_type="rviz::Tool">
+    <description>
+      A Tool to pub a labelled navigation goal.
+    </description>
+  </class>
 </library>

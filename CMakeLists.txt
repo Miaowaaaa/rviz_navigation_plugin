@@ -25,11 +25,13 @@ if (rviz_QT_VERSION VERSION_GREATER "5.0.0")
   qt5_wrap_cpp(MOC_FILES
     include/rviz_velocity_panel.h
     include/rviz_start_button.h
+    include/rviz_point_label.h
   )
   add_definitions(-DQT_NO_KEYWORDS)
   set(SOURCE_FILES
     src/rviz_velocity_panel.cpp
     src/rviz_start_button.cpp
+    src/rviz_point_label.cpp
     ${MOC_FILES}
   )
   
@@ -47,11 +49,13 @@ else()
   qt4_wrap_cpp(MOC_FILES
     include/rviz_velocity_panel.h
     include/rviz_start_button.h
+    include/rviz_point_label.h
   )
   add_definitions(-DQT_NO_KEYWORDS)
   set(SOURCE_FILES
     src/rviz_velocity_panel.cpp
     src/rviz_start_button.cpp
+    src/rviz_point_label.cpp
     ${MOC_FILES}
   )
 
