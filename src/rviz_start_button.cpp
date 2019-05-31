@@ -1,8 +1,12 @@
 #include "rviz_start_button.h"
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QString>
 #include <std_srvs/Empty.h>
+#include <std_msgs/String.h>
 #include <std_msgs/Bool.h>
 #include <boost/thread.hpp>
+#include <QLabel>
 
 namespace rviz_navigation
 {
@@ -12,14 +16,24 @@ NavigationButton::NavigationButton(QWidget* parent)
     _doing_navigation(false)
 {
     _clear_pub = _nh.advertise<std_msgs::Bool>("/clear_nav_point",100);
+    _label_pub = _nh.advertise<std_msgs::String>("/point_label",1);
 
     QVBoxLayout *root = new QVBoxLayout;
     _start_b = new QPushButton("Start Navigation");
     _delete_b = new QPushButton("Clear Goals");
     _record_b = new QPushButton("Voice Command");
+    _send_b = new QPushButton("Set Label");
+    _name_input = new QLineEdit;
+    QLabel *name_l = new QLabel("Point Name:");
+    QHBoxLayout *label_layout = new QHBoxLayout;
+    label_layout->addWidget(name_l);
+    label_layout->addWidget(_name_input);
+    label_layout->addWidget(_send_b);
+
     root->addWidget(_start_b);
     root->addWidget(_delete_b);
     root->addWidget(_record_b);
+    root->addLayout(label_layout);
     setLayout(root);
 
     connect( _start_b, SIGNAL(clicked()),this,SLOT(start()));
@@ -28,6 +42,21 @@ NavigationButton::NavigationButton(QWidget* parent)
 
     connect( _record_b, SIGNAL(pressed()),this,SLOT(record_voice()));
     connect( _record_b, SIGNAL(released()),this,SLOT(stop_record()));
+
+    connect( _send_b, SIGNAL(clicked()),this,SLOT(send_label()));
+}
+
+void NavigationButton::send_label()
+{
+    std_msgs::String msg;
+    QString label = _name_input->text();
+    msg.data = label.toStdString();
+    if(msg.data == "")
+    {
+        ROS_WARN("Can be empty!");
+        return;
+    }
+    _label_pub.publish(msg);
 }
 
 void NavigationButton::start()

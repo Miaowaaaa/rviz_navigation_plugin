@@ -5,6 +5,7 @@
 #include <ros/console.h>
 #include <rviz/panel.h>
 #include <QPushButton>
+#include <QLineEdit>
 
 namespace rviz_navigation
 {
@@ -36,6 +37,9 @@ public Q_SLOTS:
     //stop record
     void stop_record();
 
+    //send label
+    void send_label();
+
 protected:
 
     void call_nav_service();
@@ -46,9 +50,12 @@ protected:
     QPushButton *_start_b;
     QPushButton *_delete_b;
     QPushButton *_record_b;
+    QPushButton *_send_b;
+    QLineEdit   *_name_input;
     bool _doing_navigation;
     ros::NodeHandle _nh;
     ros::Publisher _clear_pub;
+    ros::Publisher _label_pub;
 };
 
 }
