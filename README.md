@@ -11,3 +11,10 @@ Attention
 The main reason your plugin doesn't appear in rviz is follows:
  - forget source setup.bash
  - forget add `<exec_depend>rviz</exec_depend>` in `package.xml`
+ 
+What can it do?
+-----------
+- Three buttons for rviz
+- `Navigation Button` call a `patrol_service` for Robot Patrol
+- `Record Voice` call a `voice_service` for Voice Command for Robot
+- The usage of buttons can be easily changed for your work
