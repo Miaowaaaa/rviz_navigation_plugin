@@ -27,6 +27,7 @@ NavigationButton::NavigationButton(QWidget* parent)
     connect( _delete_b, SIGNAL(clicked()),this,SLOT(clear()));
 
     connect( _record_b, SIGNAL(pressed()),this,SLOT(record_voice()));
+    connect( _record_b, SIGNAL(released()),this,SLOT(stop_record()));
 }
 
 void NavigationButton::start()
@@ -46,32 +47,38 @@ void NavigationButton::record_voice()
     boost::thread thread(boost::bind(&NavigationButton::call_voi_service,this));
 }
 
+void NavigationButton::stop_record()
+{
+    std_srvs::Empty::Request req;
+    std_srvs::Empty::Response resp;
+    ros::service::call("voice_service",req,resp);
+    _record_b->setText("Voice Command");
+}
 void NavigationButton::call_voi_service()
 {
     ROS_INFO("Begining record voice...");
-    _record_b->setEnabled(false);
     _record_b->setText("Recording...");
     std_srvs::Empty::Request req;
     std_srvs::Empty::Response resp;
+
+    // check if the service exists
     if(!ros::service::exists("voice_service",true))
     {
-        _record_b->setEnabled(true);
         _record_b->setText("Voice Command");
         ROS_WARN("no such service!");
         return;
     }
+    //call
     bool success = ros::service::call("voice_service",req,resp);
     if(success)
     {
-        _record_b->setEnabled(true);
-        _record_b->setText("Voice Command");
-        ROS_WARN("no such service!");
+        
+        ROS_INFO("End Recording...");
         return;
     }
     else
     {
-        _record_b->setEnabled(true);
-        _record_b->setText("Voice Command");
+
         ROS_WARN("Something error in voice recording");
     }
 }

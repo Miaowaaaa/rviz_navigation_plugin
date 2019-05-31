@@ -33,6 +33,9 @@ public Q_SLOTS:
     //record voice
     void record_voice();
 
+    //stop record
+    void stop_record();
+
 protected:
 
     void call_nav_service();
