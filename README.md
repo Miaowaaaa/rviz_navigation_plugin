@@ -4,7 +4,7 @@
 Descripiton
 -----------
 This is a complete package for `rviz_plugin_tutorial`. It has fixed the problem of panel `non-shown` in `rviz`. What's more,
-it also provide a template `CMakeLists.txt` for compile correctly in `Qt4/Qt5`.
+it also provides a template `CMakeLists.txt` to correctly compile in `Qt4/Qt5`.
 
 Attention
 -----------
